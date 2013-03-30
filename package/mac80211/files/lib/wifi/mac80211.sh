@@ -132,13 +132,15 @@ mac80211_hostapd_setup_bss() {
 	config_get_bool wds "$vif" wds 0
 	[ "$wds" -gt 0 ] && append hostapd_cfg "wds_sta=1" "$N"
 
-	local macaddr hidden maxassoc wmm
+	local macaddr hidden maxassoc wmm beacon_int vendor_elements
 	config_get macaddr "$vif" macaddr
 	config_get maxassoc "$vif" maxassoc
 	config_get dtim_period "$vif" dtim_period
 	config_get max_listen_int "$vif" max_listen_int
 	config_get_bool hidden "$vif" hidden 0
 	config_get_bool wmm "$vif" wmm 1
+	config_get beacon_int "$vif" beacon_int
+	config_get vendor_elements "$vif" vendor_elements
 	cat >> /var/run/hostapd-$phy.conf <<EOF
 $hostapd_cfg
 wmm_enabled=$wmm
@@ -146,6 +148,8 @@ bssid=$macaddr
 ignore_broadcast_ssid=$hidden
 ${dtim_period:+dtim_period=$dtim_period}
 ${max_listen_int:+max_listen_interval=$max_listen_int}
+${beacon_int:+beacon_int=$beacon_int}
+${vendor_elements:+vendor_elements=$vendor_elements}
 ${maxassoc:+max_num_sta=$maxassoc}
 EOF
 }
