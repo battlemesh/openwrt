@@ -6,6 +6,9 @@ The included feeds.conf points the 'packages' feed to git://github.com/battlemes
 
 So what you get is a particular openwrt trunk revision, of both the base source code and the packages feed.
 
+Compile a firmware with this code
+---------------------------------
+
     git clone -b wbm2013 git://github.com/battlemesh/openwrt.git
     cd openwrt
     set_environment.sh
