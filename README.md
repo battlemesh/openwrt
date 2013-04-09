@@ -23,6 +23,6 @@ If you want to bring this snapshot to the current upstream release/revision, you
     cd ~/openwrt-wbm
     git pull git://nbd.name/openwrt.git
     
-    git clone git@github.com:battlemesh/openwrt-packages.git ~/openwrt-wbm-packages
+    git clone -b wbm2013 git@github.com:battlemesh/openwrt-packages.git ~/openwrt-wbm-packages
     cd ~/openwrt-wbm-packages
     git pull git://nbd.name/packages.git
