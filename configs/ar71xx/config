@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # OpenWrt version: Barrier Breaker (r36141)
-# Mon Apr  8 20:20:20 2013
+# Tue Apr  9 03:21:50 2013
 #
 CONFIG_HAVE_DOT_CONFIG=y
 # CONFIG_TARGET_ppc40x is not set
@@ -1742,15 +1742,7 @@ CONFIG_PACKAGE_kmod-ipt-nathelper=y
 # CONFIG_PACKAGE_kmod-appletalk is not set
 # CONFIG_PACKAGE_kmod-atm is not set
 # CONFIG_PACKAGE_kmod-ax25 is not set
-CONFIG_PACKAGE_kmod-batman-adv-devel=y
-# CONFIG_KMOD_BATMAN_ADV_DEVEL_DEBUG_LOG is not set
-CONFIG_KMOD_BATMAN_ADV_DEVEL_BLA=y
-CONFIG_KMOD_BATMAN_ADV_DEVEL_BATCTL=y
-CONFIG_KMOD_BATMAN_ADV_DEVEL_BRANCH_MASTER=y
-# CONFIG_KMOD_BATMAN_ADV_DEVEL_BRANCH_BATMANV is not set
-# CONFIG_KMOD_BATMAN_ADV_DEVEL_BRANCH_CATWOMAN is not set
-# CONFIG_KMOD_BATMAN_ADV_DEVEL_BRANCH_DAT is not set
-CONFIG_KMOD_BATMAN_ADV_DEVEL_BRANCH_NAME="master"
+# CONFIG_PACKAGE_kmod-batman-adv is not set
 # CONFIG_PACKAGE_kmod-bonding is not set
 # CONFIG_PACKAGE_kmod-bridge is not set
 # CONFIG_PACKAGE_kmod-capi is not set
@@ -1770,7 +1762,6 @@ CONFIG_PACKAGE_kmod-ipv6=y
 # CONFIG_PACKAGE_kmod-misdn is not set
 # CONFIG_PACKAGE_kmod-mp-alg is not set
 # CONFIG_PACKAGE_kmod-netem is not set
-# CONFIG_PACKAGE_kmod-niit is not set
 # CONFIG_PACKAGE_kmod-openswan is not set
 # CONFIG_PACKAGE_kmod-pktgen is not set
 # CONFIG_PACKAGE_kmod-ppp is not set
