@@ -15,7 +15,9 @@ platform_check_image() {
 
 	case "$board" in
 	3g-6200n | \
+	3g-6200nl | \
 	3g300m | \
+	w150m | \
 	air3gii | \
 	all0239-3g | \
 	all0256n | \
@@ -23,6 +25,7 @@ platform_check_image() {
 	bc2 | \
 	broadway | \
 	carambola | \
+	d105 | \
 	dir-300-b1 | \
 	dir-600-b1 | \
 	dir-600-b2 | \
@@ -56,6 +59,7 @@ platform_check_image() {
 	wl341v3 | \
 	wl-330n | \
 	wl-351 | \
+	wnce2001 | \
 	wli-tx4-ag300n | \
 	whr-g300n |\
 	ur-326n4g |\

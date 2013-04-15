@@ -672,7 +672,7 @@ menuconfig TARGET_OPTIONS
 	config SOFT_FLOAT
 		bool "Use software floating point by default" if TARGET_OPTIONS
 		default y
-		depends on (arm || armeb || powerpc || mipsel || mips) && !HAS_FPU
+		depends on (arm || armeb || powerpc || mipsel || mips || mips64el || mips64) && !HAS_FPU
 		help
 		  If your target CPU does not have a Floating Point Unit (FPU) or a
 		  kernel FPU emulator, but you still wish to support floating point
@@ -680,6 +680,17 @@ menuconfig TARGET_OPTIONS
 		  point support (-msoft-float).
 
 		  Most people will answer N.
+
+	config USE_MIPS16
+		bool "Build packages with MIPS16 instructions" if TARGET_OPTIONS
+		depends on HAS_MIPS16
+		help
+		   If your target CPU does support the MIPS16 instruction set
+		   and you want to use it for packages, enable this option.
+		   MIPS16 produces smaller binaries thus reducing pressure on
+		   caches and TLB.
+
+		   Most people will answer N.
 
 source "toolchain/Config.in"
 

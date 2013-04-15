@@ -33,6 +33,9 @@ ramips_board_detect() {
 	*"Edimax 3g-6200n")
 		name="3g-6200n"
 		;;
+	*"Edimax 3g-6200nl")
+		name="3g-6200nl"
+		;;
 	*"AirLive Air3GII")
 		name="air3gii"
 		;;
@@ -102,6 +105,9 @@ ramips_board_detect() {
 	*"Hauppauge Broadway")
 		name="broadway"
 		;;
+	*"Huawei D105")
+		name="d105"
+		;;
 	*"La Fonera 2.0N")
 		name="fonera20n"
 		;;
@@ -113,6 +119,9 @@ ramips_board_detect() {
 		;;
 	*"NBG-419N")
 		name="nbg-419n"
+		;;
+	*"Netgear WNCE2001")
+		name="wnce2001"
 		;;
 	*"NexAira BC2")
 		name="bc2"
@@ -173,6 +182,9 @@ ramips_board_detect() {
 		;;
 	*"Tenda W306R V2.0")
 		name="w306r-v20"
+		;;
+	*"Tenda W150M")
+		name="w150m"
 		;;
 	*"TEW-691GR")
 		name="tew-691gr"
