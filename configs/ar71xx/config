@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
-# OpenWrt version: Barrier Breaker (r36332)
-# Mon Apr 15 15:41:06 2013
+# OpenWrt version: Barrier Breaker (r36336)
+# Mon Apr 15 16:35:45 2013
 #
 CONFIG_HAVE_DOT_CONFIG=y
 # CONFIG_TARGET_ppc40x is not set
@@ -2635,6 +2635,7 @@ CONFIG_PACKAGE_zlib=y
 # CONFIG_PACKAGE_uftpproxyd-notls is not set
 # CONFIG_PACKAGE_uucp is not set
 # CONFIG_PACKAGE_vsftpd is not set
+# CONFIG_PACKAGE_vsftpd-tls is not set
 # CONFIG_PACKAGE_wget is not set
 # CONFIG_PACKAGE_wget-nossl is not set
 # CONFIG_PACKAGE_wput is not set
@@ -3025,6 +3026,7 @@ CONFIG_PACKAGE_openssh-sftp-server=y
 # CONFIG_PACKAGE_strongswan-mod-eap-identity is not set
 # CONFIG_PACKAGE_strongswan-mod-eap-md5 is not set
 # CONFIG_PACKAGE_strongswan-mod-eap-mschapv2 is not set
+# CONFIG_PACKAGE_strongswan-mod-eap-radius is not set
 # CONFIG_PACKAGE_strongswan-mod-farp is not set
 # CONFIG_PACKAGE_strongswan-mod-fips-prf is not set
 # CONFIG_PACKAGE_strongswan-mod-gcm is not set
