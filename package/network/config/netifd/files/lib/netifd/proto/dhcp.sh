@@ -28,6 +28,7 @@ proto_dhcp_setup() {
 
 	[ "$broadcast" = 1 ] && broadcast="-B" || broadcast=
 	[ -n "$clientid" ] && clientid="-x 0x3d:${clientid//:/}" || clientid="-C"
+	[ -n "$hostname" ] || hostname="$(uci get system.@system[0].hostname)"
 
 	proto_export "INTERFACE=$config"
 	proto_run_command "$config" udhcpc \
