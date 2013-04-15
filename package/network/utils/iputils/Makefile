@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=iputils
 PKG_VERSION:=20101006
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 PKG_SOURCE:=$(PKG_NAME)-s$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=http://www.skbuff.net/iputils
@@ -168,6 +168,48 @@ endef
 define Package/iputils-traceroute6/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/traceroute6 $(1)/usr/bin/
+endef
+
+define Package/iputils-arping/preinst
+#!/bin/sh
+echo "Removing /usr/bin/arping symlink for busybox"
+[ -h "$${IPKG_INSTROOT}/usr/bin/arping" ] && rm -f "$${IPKG_INSTROOT}/usr/bin/arping"
+exit 0
+endef
+
+define Package/iputils-arping/postrm
+#!/bin/sh
+echo "Re-enabling /usr/bin/arping symlink for busybox"
+ln -sf ../../bin/busybox "$${IPKG_INSTROOT}/usr/bin/arping"
+exit 0
+endef
+
+define Package/iputils-ping/preinst
+#!/bin/sh
+echo "Removing /bin/ping symlink for busybox"
+[ -h "$${IPKG_INSTROOT}/bin/ping" ] && rm -f "$${IPKG_INSTROOT}/bin/ping"
+exit 0
+endef
+
+define Package/iputils-ping/postrm
+#!/bin/sh
+echo "Re-enabling /bin/ping symlink for busybox"
+ln -sf busybox "$${IPKG_INSTROOT}/bin/ping"
+exit 0
+endef
+
+define Package/iputils-ping6/preinst
+#!/bin/sh
+echo "Removing /bin/ping6 symlink for busybox"
+[ -h "$${IPKG_INSTROOT}/bin/ping6" ] && rm -f "$${IPKG_INSTROOT}/bin/ping6"
+exit 0
+endef
+
+define Package/iputils-ping6/postrm
+#!/bin/sh
+echo "Re-enabling /bin/ping6 symlink for busybox"
+ln -sf busybox "$${IPKG_INSTROOT}/bin/ping6"
+exit 0
 endef
 
 $(eval $(call BuildPackage,iputils-arping))
