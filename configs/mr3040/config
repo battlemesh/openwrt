@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # OpenWrt version: Barrier Breaker (r36353)
-# Fri Apr 19 14:57:16 2013
+# Fri Apr 19 17:14:27 2013
 #
 CONFIG_HAVE_DOT_CONFIG=y
 # CONFIG_TARGET_ppc40x is not set
@@ -315,7 +315,7 @@ CONFIG_TARGET_ar71xx_generic=y
 # CONFIG_TARGET_ar71xx_generic_CAP4200AG is not set
 # CONFIG_TARGET_ar71xx_generic_TLMR11U is not set
 # CONFIG_TARGET_ar71xx_generic_TLMR3020 is not set
-# CONFIG_TARGET_ar71xx_generic_TLMR3040 is not set
+CONFIG_TARGET_ar71xx_generic_TLMR3040=y
 # CONFIG_TARGET_ar71xx_generic_TLMR3220 is not set
 # CONFIG_TARGET_ar71xx_generic_TLMR3420 is not set
 # CONFIG_TARGET_ar71xx_generic_TLWR703 is not set
@@ -324,7 +324,7 @@ CONFIG_TARGET_ar71xx_generic=y
 # CONFIG_TARGET_ar71xx_generic_TLWA801 is not set
 # CONFIG_TARGET_ar71xx_generic_TLWA830 is not set
 # CONFIG_TARGET_ar71xx_generic_TLWA901 is not set
-CONFIG_TARGET_ar71xx_generic_TLWDR4300=y
+# CONFIG_TARGET_ar71xx_generic_TLWDR4300 is not set
 # CONFIG_TARGET_ar71xx_generic_TLWR740 is not set
 # CONFIG_TARGET_ar71xx_generic_TLWR741 is not set
 # CONFIG_TARGET_ar71xx_generic_TLWR743 is not set
@@ -1344,7 +1344,7 @@ CONFIG_PACKAGE_procd=y
 CONFIG_PACKAGE_swconfig=y
 CONFIG_PACKAGE_uci=y
 # CONFIG_PACKAGE_udev is not set
-CONFIG_PACKAGE_wireless-tools=y
+# CONFIG_PACKAGE_wireless-tools is not set
 # CONFIG_PACKAGE_zram-swap is not set
 
 #
@@ -1434,16 +1434,16 @@ CONFIG_PACKAGE_rdnssd=y
 #
 # wide-dhcpv6
 #
-CONFIG_PACKAGE_wide-dhcpv6-client=y
-CONFIG_PACKAGE_wide-dhcpv6-control=y
+# CONFIG_PACKAGE_wide-dhcpv6-client is not set
+# CONFIG_PACKAGE_wide-dhcpv6-control is not set
 # CONFIG_PACKAGE_wide-dhcpv6-relay is not set
-CONFIG_PACKAGE_wide-dhcpv6-server=y
-CONFIG_PACKAGE_6in4=y
-CONFIG_PACKAGE_6rd=y
+# CONFIG_PACKAGE_wide-dhcpv6-server is not set
+# CONFIG_PACKAGE_6in4 is not set
+# CONFIG_PACKAGE_6rd is not set
 # CONFIG_PACKAGE_6relayd is not set
-CONFIG_PACKAGE_6to4=y
+# CONFIG_PACKAGE_6to4 is not set
 # CONFIG_PACKAGE_6tunnel is not set
-CONFIG_PACKAGE_ahcpd=y
+# CONFIG_PACKAGE_ahcpd is not set
 # CONFIG_PACKAGE_aiccu is not set
 # CONFIG_PACKAGE_bird6 is not set
 # CONFIG_PACKAGE_birdc6 is not set
@@ -1462,7 +1462,7 @@ CONFIG_PACKAGE_ahcpd=y
 # CONFIG_PACKAGE_ndppd is not set
 CONFIG_PACKAGE_odhcp6c=y
 # CONFIG_PACKAGE_ptrtd is not set
-CONFIG_PACKAGE_radvd=y
+# CONFIG_PACKAGE_radvd is not set
 # CONFIG_PACKAGE_radvdump is not set
 # CONFIG_PACKAGE_send is not set
 # CONFIG_PACKAGE_tayga is not set
@@ -1483,8 +1483,8 @@ CONFIG_PACKAGE_radvd=y
 #
 # 2. Modules
 #
-CONFIG_PACKAGE_luci-mod-admin-core=y
-CONFIG_PACKAGE_luci-mod-admin-full=y
+# CONFIG_PACKAGE_luci-mod-admin-core is not set
+# CONFIG_PACKAGE_luci-mod-admin-full is not set
 # CONFIG_PACKAGE_luci-mod-failsafe is not set
 # CONFIG_PACKAGE_luci-mod-freifunk is not set
 # CONFIG_PACKAGE_luci-mod-rpc is not set
@@ -1507,9 +1507,7 @@ CONFIG_PACKAGE_luci-mod-admin-full=y
 # CONFIG_PACKAGE_luci-app-meshwizard is not set
 # CONFIG_PACKAGE_luci-app-mmc-over-gpio is not set
 # CONFIG_PACKAGE_luci-app-ntpc is not set
-CONFIG_PACKAGE_luci-app-olsr=y
-# CONFIG_PACKAGE_luci-app-olsr-services is not set
-# CONFIG_PACKAGE_luci-app-olsr-viz is not set
+# CONFIG_PACKAGE_luci-app-olsr is not set
 # CONFIG_PACKAGE_luci-app-p910nd is not set
 # CONFIG_PACKAGE_luci-app-pbx is not set
 # CONFIG_PACKAGE_luci-app-polipo is not set
@@ -1542,7 +1540,7 @@ CONFIG_PACKAGE_luci-theme-bootstrap=y
 #
 # CONFIG_PACKAGE_luci-i18n-catalan is not set
 # CONFIG_PACKAGE_luci-i18n-chinese is not set
-CONFIG_PACKAGE_luci-i18n-english=y
+# CONFIG_PACKAGE_luci-i18n-english is not set
 # CONFIG_PACKAGE_luci-i18n-french is not set
 # CONFIG_PACKAGE_luci-i18n-german is not set
 # CONFIG_PACKAGE_luci-i18n-greek is not set
@@ -1564,8 +1562,8 @@ CONFIG_PACKAGE_luci-i18n-english=y
 #
 # 6. Protocols
 #
-CONFIG_PACKAGE_luci-proto-core=y
-CONFIG_PACKAGE_luci-proto-ipv6=y
+# CONFIG_PACKAGE_luci-proto-core is not set
+# CONFIG_PACKAGE_luci-proto-ipv6 is not set
 # CONFIG_PACKAGE_luci-proto-ppp is not set
 # CONFIG_PACKAGE_luci-proto-relay is not set
 
@@ -1741,7 +1739,7 @@ CONFIG_PACKAGE_kmod-ledtrig-usbdev=y
 # Libraries
 #
 # CONFIG_PACKAGE_kmod-lib-cordic is not set
-CONFIG_PACKAGE_kmod-lib-crc-ccitt=y
+# CONFIG_PACKAGE_kmod-lib-crc-ccitt is not set
 # CONFIG_PACKAGE_kmod-lib-crc-itu-t is not set
 CONFIG_PACKAGE_kmod-lib-crc16=y
 CONFIG_PACKAGE_kmod-lib-crc32c=y
@@ -1910,7 +1908,7 @@ CONFIG_PACKAGE_kmod-ipv6=y
 # CONFIG_PACKAGE_kmod-sched-core is not set
 # CONFIG_PACKAGE_kmod-sched-esfq is not set
 # CONFIG_PACKAGE_kmod-sctp is not set
-CONFIG_PACKAGE_kmod-sit=y
+# CONFIG_PACKAGE_kmod-sit is not set
 # CONFIG_PACKAGE_kmod-slip is not set
 # CONFIG_PACKAGE_kmod-stp is not set
 # CONFIG_PACKAGE_kmod-trelay is not set
@@ -2247,12 +2245,7 @@ CONFIG_PACKAGE_libxtables=y
 # CONFIG_PACKAGE_libgnutls-extra is not set
 # CONFIG_PACKAGE_libgnutls-openssl is not set
 # CONFIG_PACKAGE_libmatrixssl is not set
-CONFIG_PACKAGE_libopenssl=y
-
-#
-# Configuration
-#
-# CONFIG_OPENSSL_ENGINE_CRYPTO is not set
+# CONFIG_PACKAGE_libopenssl is not set
 # CONFIG_PACKAGE_libpolarssl is not set
 
 #
@@ -2342,7 +2335,7 @@ CONFIG_PACKAGE_libblobmsg-json=y
 # CONFIG_PACKAGE_libcunit is not set
 # CONFIG_PACKAGE_libcurl is not set
 # CONFIG_PACKAGE_libcwiid is not set
-CONFIG_PACKAGE_libdaemon=y
+# CONFIG_PACKAGE_libdaemon is not set
 # CONFIG_PACKAGE_libdaq is not set
 # CONFIG_PACKAGE_libdb47 is not set
 # CONFIG_PACKAGE_libdb47xx is not set
@@ -2378,7 +2371,7 @@ CONFIG_PACKAGE_libdaemon=y
 # CONFIG_PACKAGE_libfreetype is not set
 # CONFIG_PACKAGE_libftdi is not set
 # CONFIG_PACKAGE_libgcrypt is not set
-CONFIG_PACKAGE_libgd=y
+# CONFIG_PACKAGE_libgd is not set
 # CONFIG_PACKAGE_libgdbm is not set
 # CONFIG_PACKAGE_libgee is not set
 # CONFIG_PACKAGE_libgmp is not set
@@ -2406,7 +2399,7 @@ CONFIG_PACKAGE_libgd=y
 # CONFIG_PACKAGE_libintl-full is not set
 # CONFIG_PACKAGE_libiw is not set
 CONFIG_PACKAGE_libiwinfo=y
-CONFIG_PACKAGE_libjpeg=y
+# CONFIG_PACKAGE_libjpeg is not set
 # CONFIG_PACKAGE_libjs is not set
 CONFIG_PACKAGE_libjson=y
 # CONFIG_PACKAGE_libldns is not set
@@ -2455,7 +2448,6 @@ CONFIG_PACKAGE_libnl-tiny=y
 # CONFIG_PACKAGE_liboil is not set
 # CONFIG_PACKAGE_libol is not set
 # CONFIG_PACKAGE_libopal is not set
-# CONFIG_PACKAGE_libopencdk is not set
 # CONFIG_PACKAGE_libopenh323 is not set
 # CONFIG_PACKAGE_libopenldap is not set
 # CONFIG_PACKAGE_liboping is not set
@@ -2475,13 +2467,13 @@ CONFIG_PACKAGE_libpcap=y
 # CONFIG_PACKAGE_libpiano is not set
 # CONFIG_PACKAGE_libplist is not set
 # CONFIG_PACKAGE_libplistcxx is not set
-CONFIG_PACKAGE_libpng=y
+# CONFIG_PACKAGE_libpng is not set
 # CONFIG_PACKAGE_libpopt is not set
 # CONFIG_PACKAGE_libprotobuf-c is not set
 # CONFIG_PACKAGE_libptmalloc3 is not set
 # CONFIG_PACKAGE_libradiusclient-ng is not set
 # CONFIG_PACKAGE_libre is not set
-CONFIG_PACKAGE_libreadline=y
+# CONFIG_PACKAGE_libreadline is not set
 # CONFIG_PACKAGE_librem is not set
 # CONFIG_PACKAGE_librpc is not set
 # CONFIG_PACKAGE_librpcsecgss is not set
@@ -2570,7 +2562,7 @@ CONFIG_PACKAGE_terminfo=y
 # CONFIG_PACKAGE_xmpp4r is not set
 # CONFIG_PACKAGE_zaptel-libtonezone is not set
 # CONFIG_PACKAGE_zaptel14-libtonezone is not set
-CONFIG_PACKAGE_zlib=y
+# CONFIG_PACKAGE_zlib is not set
 
 #
 # Network
@@ -2927,13 +2919,13 @@ CONFIG_PACKAGE_olsrd-mod-txtinfo=y
 # CONFIG_PACKAGE_autossh is not set
 # CONFIG_PACKAGE_corkscrew is not set
 # CONFIG_PACKAGE_gesftpserver is not set
-CONFIG_PACKAGE_openssh-client=y
-CONFIG_PACKAGE_openssh-client-utils=y
-CONFIG_PACKAGE_openssh-keygen=y
+# CONFIG_PACKAGE_openssh-client is not set
+# CONFIG_PACKAGE_openssh-client-utils is not set
+# CONFIG_PACKAGE_openssh-keygen is not set
 # CONFIG_PACKAGE_openssh-moduli is not set
-CONFIG_PACKAGE_openssh-server=y
-CONFIG_PACKAGE_openssh-sftp-client=y
-CONFIG_PACKAGE_openssh-sftp-server=y
+# CONFIG_PACKAGE_openssh-server is not set
+# CONFIG_PACKAGE_openssh-sftp-client is not set
+# CONFIG_PACKAGE_openssh-sftp-server is not set
 # CONFIG_PACKAGE_rssh is not set
 # CONFIG_PACKAGE_sshtunnel is not set
 
@@ -3120,7 +3112,7 @@ CONFIG_PACKAGE_uhttpd=y
 # CONFIG_PACKAGE_uhttpd_debug is not set
 # CONFIG_PACKAGE_uhttpd-mod-lua is not set
 # CONFIG_PACKAGE_uhttpd-mod-tls is not set
-CONFIG_PACKAGE_uhttpd-mod-ubus=y
+# CONFIG_PACKAGE_uhttpd-mod-ubus is not set
 # CONFIG_PACKAGE_wccpd is not set
 
 #
@@ -3546,11 +3538,11 @@ CONFIG_PACKAGE_ubusd=y
 #
 # CONFIG_PACKAGE_joe is not set
 # CONFIG_PACKAGE_mg is not set
-CONFIG_PACKAGE_nano=y
-CONFIG_PACKAGE_vim=y
-CONFIG_PACKAGE_vim-full=y
+# CONFIG_PACKAGE_nano is not set
+# CONFIG_PACKAGE_vim is not set
+# CONFIG_PACKAGE_vim-full is not set
 # CONFIG_PACKAGE_vim-help is not set
-CONFIG_PACKAGE_vim-runtime=y
+# CONFIG_PACKAGE_vim-runtime is not set
 # CONFIG_PACKAGE_zile is not set
 
 #
