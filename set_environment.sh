@@ -6,7 +6,7 @@ error() {
 	exit 1
 }
 
-TARGET=${1-ar71xx}
+TARGET=${1-tl-wdr}
 
 [ ! -d configs/$TARGET ] && error target does not exist
 
