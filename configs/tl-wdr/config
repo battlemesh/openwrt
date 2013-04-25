@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # OpenWrt version: Barrier Breaker (r36353)
-# Fri Apr 19 14:54:59 2013
+# Sat Apr 20 10:29:23 2013
 #
 CONFIG_HAVE_DOT_CONFIG=y
 # CONFIG_TARGET_ppc40x is not set
@@ -1351,6 +1351,7 @@ CONFIG_PACKAGE_wireless-tools=y
 # WBM
 #
 CONFIG_PACKAGE_wbm-testbed=y
+CONFIG_PACKAGE_wbm-test-scripts=y
 
 #
 # IPv6
