@@ -4,7 +4,7 @@
 
 / {
 	compatible = "ALL5002", "ralink,rt3352-soc";
-	model = "Allnet ALL5002/ALL5003";
+	model = "Allnet ALL5002";
 
 	palmbus@10000000 {
 		sysc@0 {

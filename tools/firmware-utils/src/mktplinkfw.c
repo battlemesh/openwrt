@@ -44,6 +44,7 @@
 #define HWID_TL_WA901ND_V2	0x09010002
 #define HWID_TL_WDR4900_V1	0x49000001
 #define HWID_TL_WR703N_V1	0x07030101
+#define HWID_TL_WR720N_V3	0x07200103
 #define HWID_TL_WR741ND_V1	0x07410001
 #define HWID_TL_WR741ND_V4	0x07410004
 #define HWID_TL_WR740N_V1	0x07400001
@@ -337,6 +338,11 @@ static struct board_info boards[] = {
 		.hw_rev		= 1,
 		.layout_id	= "4Mlzma",
 	}, {
+		.id		= "TL-WR720Nv3",
+		.hw_id		= HWID_TL_WR720N_V3,
+		.hw_rev		= 1,
+		.layout_id	= "4Mlzma",
+	}, {
 		/* terminating entry */
 	}
 };
@@ -419,6 +425,7 @@ static void usage(int status)
 "  -E <ep>         overwrite kernel entry point with <ep> (hexval prefixed with 0x)\n"
 "  -L <la>         overwrite kernel load address with <la> (hexval prefixed with 0x)\n"
 "  -H <hwid>       use hardware id specified with <hwid>\n"
+"  -W <hwrev>      use hardware revision specified with <hwrev>\n"
 "  -F <id>         use flash layout specified with <id>\n"
 "  -k <file>       read kernel image from the file <file>\n"
 "  -r <file>       read rootfs image from the file <file>\n"

@@ -265,9 +265,22 @@ Image/Build/Profile/ALL0256N=$(call BuildFirmware/DefaultDualSize/$(1),$(1),all0
 
 allnet_all5002_mtd_size=33226752
 Image/Build/Profile/ALL5002=$(call BuildFirmware/CustomFlash/$(1),$(1),all5002,ALL5002,$(allnet_all5002_mtd_size))
+Image/Build/Profile/ALL5003=$(call BuildFirmware/CustomFlash/$(1),$(1),all5003,ALL5003,$(allnet_all5002_mtd_size))
 
 argus_atp52b_mtd_size=7995392
 Image/Build/Profile/ARGUS_ATP52B=$(call BuildFirmware/CustomFlash/$(1),$(1),argus_atp52b,ARGUS_ATP52B,$(argus_atp52b_mtd_size))
+
+asl26555_8mb_mtd_size=7929856
+asl26555_16mb_mtd_size=16252928
+define BuildFirmware/ASL26555/squashfs
+	$(call BuildFirmware/CustomFlash/$(1),$(1),$(2)-8M,$(3)-8M,$(asl26555_8mb_mtd_size))
+	$(call BuildFirmware/CustomFlash/$(1),$(1),$(2)-16M,$(3)-16M,$(asl26555_16mb_mtd_size))
+endef
+define BuildFirmware/ASL26555/initramfs
+	$(call BuildFirmware/OF/initramfs,$(1),$(2)-8M,$(3)-8M)
+	$(call BuildFirmware/OF/initramfs,$(1),$(2)-16M,$(3)-16M)
+endef
+Image/Build/Profile/ASL26555=$(call BuildFirmware/ASL26555/$(1),$(1),asl26555,ASL26555)
 
 Image/Build/Profile/BC2=$(call BuildFirmware/Default8M/$(1),$(1),bc2,BC2)
 
@@ -291,6 +304,7 @@ Image/Build/Profile/DIR-600-B2=$(call BuildFirmware/DIR300B1/$(1),$(1),dir-600-b
 Image/Build/Profile/DIR-615-D=$(call BuildFirmware/DIR300B1/$(1),$(1),dir-615-d,DIR-615-D,wrgn23_dlwbr_dir615d)
 
 Image/Build/Profile/DIR-620-A1=$(call BuildFirmware/Default8M/$(1),$(1),dir-620-a1,DIR-620-A1)
+Image/Build/Profile/DIR-620-D1=$(call BuildFirmware/Default8M/$(1),$(1),dir-620-d1,DIR-620-D1)
 
 define BuildFirmware/DIR615H1/squashfs
 	$(call BuildFirmware/Default4M/$(1),$(1),dir-615-h1,DIR-615-H1)
@@ -423,7 +437,9 @@ define Image/Build/Profile/Default
 	$(call Image/Build/Profile/ALL02393G,$(1))
 	$(call Image/Build/Profile/ALL0256N,$(1))
 	$(call Image/Build/Profile/ALL5002,$(1))
+	$(call Image/Build/Profile/ALL5003,$(1))
 	$(call Image/Build/Profile/ARGUS_ATP52B,$(1))
+	$(call Image/Build/Profile/ASL26555,$(1))
 	$(call Image/Build/Profile/BC2,$(1))
 	$(call Image/Build/Profile/BROADWAY,$(1))
 	$(call Image/Build/Profile/CARAMBOLA,$(1))
@@ -433,6 +449,7 @@ define Image/Build/Profile/Default
 	$(call Image/Build/Profile/DIR-600-B2,$(1))
 	$(call Image/Build/Profile/DIR-615-D,$(1))
 	$(call Image/Build/Profile/DIR-620-A1,$(1))
+	$(call Image/Build/Profile/DIR-620-D1,$(1))
 	$(call Image/Build/Profile/DIR615H1,$(1))
 	$(call Image/Build/Profile/DAP1350,$(1))
 	$(call Image/Build/Profile/DAP1350WW,$(1))
@@ -500,10 +517,6 @@ endif
 #
 # Generic Targets
 #
-define Image/Build/squashfs
-	$(call prepare_generic_squashfs,$(KDIR)/root.squashfs)
-endef
-
 define Image/BuildKernel
 	cp $(KDIR)/vmlinux.elf $(BIN_DIR)/$(VMLINUX).elf
 	cp $(KDIR)/vmlinux $(BIN_DIR)/$(VMLINUX).bin
