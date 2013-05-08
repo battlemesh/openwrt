@@ -81,7 +81,7 @@ Signed-off-by: John Crispin <blogic@openwrt.org>
  obj-$(CONFIG_PLAT_SAMSUNG)	+= gpio-samsung.o
 --- /dev/null
 +++ b/drivers/gpio/gpio-ralink.c
-@@ -0,0 +1,176 @@
+@@ -0,0 +1,182 @@
 +/*
 + * This program is free software; you can redistribute it and/or modify it
 + * under the terms of the GNU General Public License version 2 as published
@@ -189,6 +189,7 @@ Signed-off-by: John Crispin <blogic@openwrt.org>
 +	struct resource *res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 +	struct ralink_gpio_chip *gc;
 +	const __be32 *ngpio;
++	const __be32 *gpiobase;
 +
 +	if (!res) {
 +		dev_err(&pdev->dev, "failed to find resource\n");
@@ -218,16 +219,21 @@ Signed-off-by: John Crispin <blogic@openwrt.org>
 +		return -EINVAL;
 +	}
 +
-+	spin_lock_init(&gc->lock);
++	gpiobase = of_get_property(np, "ralink,gpio-base", NULL);
++	if (gpiobase)
++		gc->chip.base = be32_to_cpu(*gpiobase);
++	else
++		gc->chip.base = -1;
 +
 +	gc->chip.label = dev_name(&pdev->dev);
 +	gc->chip.of_node = np;
-+	gc->chip.base = -1;
 +	gc->chip.ngpio = be32_to_cpu(*ngpio);
 +	gc->chip.direction_input = ralink_gpio_direction_input;
 +	gc->chip.direction_output = ralink_gpio_direction_output;
 +	gc->chip.get = ralink_gpio_get;
 +	gc->chip.set = ralink_gpio_set;
++
++	spin_lock_init(&gc->lock);
 +
 +	/* set polarity to low for all lines */
 +	rt_gpio_w32(gc, GPIO_REG_POL, 0);

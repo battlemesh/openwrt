@@ -2148,7 +2148,7 @@ Signed-off-by: John Crispin <blogic@openwrt.org>
 +	}
 +
 +	mdio_cfg = RAMIPS_MDIO_CFG_TX_CLK_SKEW_200 |
-+		   RAMIPS_MDIO_CFG_TX_CLK_SKEW_200 |
++		   RAMIPS_MDIO_CFG_RX_CLK_SKEW_200 |
 +		   RAMIPS_MDIO_CFG_GP1_FRC_EN;
 +
 +	if (re->duplex == DUPLEX_FULL)

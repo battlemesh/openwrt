@@ -49,7 +49,7 @@ Signed-off-by: John Crispin <blogic@openwrt.org>
  
 --- /dev/null
 +++ b/arch/mips/ralink/pinmux.c
-@@ -0,0 +1,76 @@
+@@ -0,0 +1,77 @@
 +/*
 + *  This program is free software; you can redistribute it and/or modify it
 + *  under the terms of the GNU General Public License version 2 as published
@@ -67,13 +67,15 @@ Signed-off-by: John Crispin <blogic@openwrt.org>
 +
 +#define SYSC_REG_GPIO_MODE	0x60
 +
-+static u32 ralink_mux_mask(const char *name, struct ralink_pinmux_grp *grps)
++static int ralink_mux_mask(const char *name, struct ralink_pinmux_grp *grps, u32* mask)
 +{
-+	for (; grps->name; grps++)
-+		if (!strcmp(grps->name, name))
-+			return grps->mask;
++	for (; grps && grps->name; grps++)
++		if (!strcmp(grps->name, name)) {
++			*mask = grps->mask;
++			return 0;
++		}
 +
-+	return 0;
++	return -1;
 +}
 +
 +void ralink_pinmux(void)
@@ -83,14 +85,14 @@ Signed-off-by: John Crispin <blogic@openwrt.org>
 +	struct property *prop;
 +	const char *uart, *pin;
 +	u32 mode = 0;
++	int m;
 +
 +	np = of_find_compatible_node(NULL, NULL, "ralink,rt3050-sysc");
 +	if (!np)
 +		return;
 +
 +	of_property_for_each_string(np, "ralink,gpiomux", prop, pin) {
-+		int m = ralink_mux_mask(pin, rt_gpio_pinmux.mode);
-+		if (m) {
++		if (!ralink_mux_mask(pin, rt_gpio_pinmux.mode, &m)) {
 +			mode |= m;
 +			pr_debug("pinmux: registered gpiomux \"%s\"\n", pin);
 +		} else {
@@ -99,8 +101,7 @@ Signed-off-by: John Crispin <blogic@openwrt.org>
 +	}
 +
 +	of_property_for_each_string(np, "ralink,pinmux", prop, pin) {
-+		int m = ralink_mux_mask(pin, rt_gpio_pinmux.mode);
-+		if (m) {
++		if (!ralink_mux_mask(pin, rt_gpio_pinmux.mode, &m)) {
 +			mode &= ~m;
 +			pr_debug("pinmux: registered pinmux \"%s\"\n", pin);
 +		} else {
@@ -110,13 +111,13 @@ Signed-off-by: John Crispin <blogic@openwrt.org>
 +
 +	of_property_read_string(np, "ralink,uartmux", &uart);
 +	if (uart) {
-+		int m = ralink_mux_mask(uart, rt_gpio_pinmux.uart);
-+		mode |= rt_gpio_pinmux.uart_mask << rt_gpio_pinmux.uart_shift;
-+		if (m) {
-+			mode &= ~(m << rt_gpio_pinmux.uart_shift);
-+			pr_debug("pinmux: registered uartmux \"%s\"\n", uart);
++		mode &= ~(rt_gpio_pinmux.uart_mask << rt_gpio_pinmux.uart_shift);
++		if (ralink_mux_mask(uart, rt_gpio_pinmux.uart, &m)) {
++			pr_err("pinmux: failed to load uartmux \"%s\"\n", uart);
++			mode |= rt_gpio_pinmux.uart_mask << rt_gpio_pinmux.uart_shift;
 +		} else {
-+			pr_debug("pinmux: registered uartmux \"gpio\"\n");
++			mode |= m << rt_gpio_pinmux.uart_shift;
++			pr_debug("pinmux: registered uartmux \"%s\"\n", uart);
 +		}
 +	}
 +

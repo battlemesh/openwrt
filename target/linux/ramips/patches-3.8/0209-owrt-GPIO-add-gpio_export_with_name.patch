@@ -91,7 +91,7 @@ Signed-off-by: John Crispin <blogic@openwrt.org>
  
  /* Private data structure for of_gpiochip_find_and_xlate */
  struct gg_data {
-@@ -288,3 +290,62 @@ void of_gpiochip_remove(struct gpio_chip
+@@ -288,3 +290,69 @@ void of_gpiochip_remove(struct gpio_chip
  	if (chip->of_node)
  		of_node_put(chip->of_node);
  }
@@ -121,16 +121,23 @@ Signed-off-by: John Crispin <blogic@openwrt.org>
 +			max_gpio = of_gpio_count(cnp);
 +
 +		for (i = 0; i < max_gpio; i++) {
-+			gpio = of_get_gpio(cnp, i);
-+			if (devm_gpio_request(&pdev->dev, gpio, name ? name : of_node_full_name(np)))
-+				continue;
++			unsigned flags = 0;
++			enum of_gpio_flags of_flags;
++
++			gpio = of_get_gpio_flags(cnp, i, &of_flags);
++
++			if (of_flags == OF_GPIO_ACTIVE_LOW)
++				flags |= GPIOF_ACTIVE_LOW;
 +
 +			if (!of_property_read_u32(cnp, "gpio-export,output", &val))
-+				gpio_direction_output(gpio, val);
++				flags |= val ? GPIOF_OUT_INIT_HIGH : GPIOF_OUT_INIT_LOW;
 +			else
-+				gpio_direction_input(gpio);
++				flags |= GPIOF_IN;
 +
-+			dmc = of_property_read_bool(np, "gpio-export,direction_may_change");
++			if (devm_gpio_request_one(&pdev->dev, gpio, flags, name ? name : of_node_full_name(np)))
++				continue;
++
++			dmc = of_property_read_bool(cnp, "gpio-export,direction_may_change");
 +			gpio_export_with_name(gpio, dmc, name);
 +			nb++;
 +		}
@@ -195,6 +202,16 @@ Signed-off-by: John Crispin <blogic@openwrt.org>
  
  static int match_export(struct device *dev, void *data)
  {
+@@ -1418,6 +1421,9 @@ int gpio_request_one(unsigned gpio, unsi
+ 	if (flags & GPIOF_OPEN_SOURCE)
+ 		set_bit(FLAG_OPEN_SOURCE, &gpio_desc[gpio].flags);
+ 
++	if (flags & GPIOF_ACTIVE_LOW)
++		set_bit(FLAG_ACTIVE_LOW, &gpio_desc[gpio].flags);
++
+ 	if (flags & GPIOF_DIR_IN)
+ 		err = gpio_direction_input(gpio);
+ 	else
 --- a/include/asm-generic/gpio.h
 +++ b/include/asm-generic/gpio.h
 @@ -204,7 +204,8 @@ void devm_gpio_free(struct device *dev,
@@ -219,7 +236,17 @@ Signed-off-by: John Crispin <blogic@openwrt.org>
  }
 --- a/include/linux/gpio.h
 +++ b/include/linux/gpio.h
-@@ -189,7 +189,8 @@ static inline void gpio_set_value_cansle
+@@ -27,6 +27,9 @@
+ #define GPIOF_EXPORT_DIR_FIXED	(GPIOF_EXPORT)
+ #define GPIOF_EXPORT_DIR_CHANGEABLE (GPIOF_EXPORT | GPIOF_EXPORT_CHANGEABLE)
+ 
++#define GPIOF_ACTIVE_LOW	(1 << 6)
++
++
+ /**
+  * struct gpio - a structure describing a GPIO with configuration
+  * @gpio:	the GPIO number
+@@ -189,7 +192,8 @@ static inline void gpio_set_value_cansle
  	WARN_ON(1);
  }
  
@@ -229,7 +256,7 @@ Signed-off-by: John Crispin <blogic@openwrt.org>
  {
  	/* GPIO can never have been requested or set as {in,out}put */
  	WARN_ON(1);
-@@ -248,4 +249,24 @@ gpiochip_remove_pin_ranges(struct gpio_c
+@@ -248,4 +252,24 @@ gpiochip_remove_pin_ranges(struct gpio_c
  
  #endif /* ! CONFIG_GENERIC_GPIO */
  
