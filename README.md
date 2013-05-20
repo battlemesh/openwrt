@@ -11,7 +11,7 @@ Compile a firmware with this code
 
     git clone -b wbm2013 git://github.com/battlemesh/openwrt.git
     cd openwrt
-    set_environment.sh
+    ./set_environment.sh
     make
 
 Update to a newer upstream rev
