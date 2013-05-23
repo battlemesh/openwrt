@@ -17,6 +17,9 @@ scripts/feeds install -a
 echo "Copying config"
 cp -f configs/$TARGET/config .config || error config for this target does not exist
 
+echo "Expanding config"
+make defconfig
+
 echo "Copying files"
 [ ! -e files ] && mkdir files
 [ -d configs/$TARGET/files ] && cp -rf configs/$TARGET/files/* files/ 2>/dev/null
