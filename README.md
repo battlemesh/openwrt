@@ -12,7 +12,13 @@ Compile a firmware with this code
     git clone -b wbm2013 git://github.com/battlemesh/openwrt.git
     cd openwrt
     ./set_environment.sh
-    make
+    make V=99
+    ./set_environment.sh mr3040
+    make V=99
+    ./set_environment.sh mr3020
+    make V=99
+    ./set_environment.sh x86
+    make V=99
 
 Update to a newer upstream rev
 ------------------------------
