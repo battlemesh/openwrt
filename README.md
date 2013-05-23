@@ -6,13 +6,26 @@ The included feeds.conf points the 'packages' feed to git://github.com/battlemes
 
 So what you get is a particular openwrt trunk revision, of both the base source code and the packages feed.
 
-Compile a firmware with this code
----------------------------------
+Get the code
+------------
 
     git clone -b wbm2013 git://github.com/battlemesh/openwrt.git
+
+
+Update code
+-----------
+
     cd openwrt
+    ./scripts/feeds update -a
+    git pull
+
+
+
+Compile the code
+----------------
+
     ./set_environment.sh
-    make V=99
+     make V=99
     ./set_environment.sh mr3040
     make V=99
     ./set_environment.sh mr3020
@@ -20,8 +33,9 @@ Compile a firmware with this code
     ./set_environment.sh x86
     make V=99
 
-Update to a newer upstream rev
+old text here, needed?
 ------------------------------
+
 
 If you want to bring this snapshot to the current upstream release/revision, you must fetch the upstream changesets, merge them, (and probably push them back to github); do this for both the base and packages repositories.
     
