@@ -132,6 +132,7 @@ get_status_led() {
 	tl-wr941nd)
 		status_led="tp-link:green:system"
 		;;
+	archer-c7 | \
 	tl-wdr4300 | \
 	tl-wr703n | \
 	tl-wr720n-v3)
@@ -158,6 +159,9 @@ get_status_led() {
 	wzr-hp-ag300h | \
 	wzr-hp-g300nh2)
 		status_led="buffalo:red:diag"
+		;;
+	wndap360)
+		status_led="wndap360:green:power"
 		;;
 	wndr3700)
 		status_led="wndr3700:green:power"

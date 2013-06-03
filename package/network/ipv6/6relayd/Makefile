@@ -8,14 +8,14 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=6relayd
-PKG_VERSION:=2013-04-24
+PKG_VERSION:=2013-06-01
 PKG_RELEASE=$(PKG_SOURCE_VERSION)
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE_URL:=git://github.com/sbyx/6relayd.git
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=67c5e6b27958b1cd54798bf2a353ba5c36843b24
+PKG_SOURCE_VERSION:=9fc96765899e88d9219669b1b1db9ad3c63d2bf4
 
 PKG_MAINTAINER:=Steven Barth <steven@midlink.org>
 
@@ -23,8 +23,8 @@ include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk
 
 define Package/6relayd
-  SECTION:=ipv6
-  CATEGORY:=IPv6
+  SECTION:=net
+  CATEGORY:=Network
   TITLE:=DHCPv6(-PD)/RA Server & Relay
   DEPENDS:=+kmod-ipv6
 endef
@@ -45,6 +45,7 @@ endef
 define Package/6relayd/install
 	$(INSTALL_DIR) $(1)/usr/sbin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/6relayd $(1)/usr/sbin/
+	$(INSTALL_BIN) ./files/6relayd-update $(1)/usr/sbin/
 	$(INSTALL_DIR) $(1)/etc/hotplug.d/iface
 	$(INSTALL_DATA) ./files/6relayd.hotplug $(1)/etc/hotplug.d/iface/30-6relay
 	$(INSTALL_DIR) $(1)/etc/config

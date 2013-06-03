@@ -122,6 +122,7 @@ platform_check_image() {
 	nanostation-m | \
 	rocket-m | \
 	rw2458n | \
+	wndap360 | \
 	wzr-hp-g300nh2 | \
 	wzr-hp-g300nh | \
 	wzr-hp-g450h | \
@@ -153,6 +154,8 @@ platform_check_image() {
 		platform_check_image_openmesh "$magic_long" "$1" && return 0
 		return 1
 		;;
+
+	archer-c7 | \
 	tl-mr11u | \
 	tl-mr3020 | \
 	tl-mr3040 | \

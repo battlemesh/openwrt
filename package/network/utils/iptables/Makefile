@@ -9,15 +9,15 @@ include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
 PKG_NAME:=iptables
-PKG_VERSION:=1.4.18
-PKG_RELEASE:=3
+PKG_VERSION:=1.4.19.1
+PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=http://www.netfilter.org/projects/iptables/files \
 	ftp://ftp.be.netfilter.org/pub/netfilter/iptables/ \
 	ftp://ftp.de.netfilter.org/pub/netfilter/iptables/ \
 	ftp://ftp.no.netfilter.org/pub/netfilter/iptables/
-PKG_MD5SUM:=a819199d5ec013b82da13a8ffbba857e
+PKG_MD5SUM:=be97ce9007fa42c867901b496c935a0a
 
 PKG_FIXUP:=autoreconf
 PKG_INSTALL:=1
@@ -62,20 +62,34 @@ IP firewall administration tool.
   - tcp
   - udp
   - comment
+  - conntrack
   - limit
   - mac
+  - mark
   - multiport
+  - set
+  - state
+  - time
 
  Targets:
   - ACCEPT
+  - CT
+  - DNAT
   - DROP
   - REJECT
   - LOG
+  - MARK
+  - MASQUERADE
+  - REDIRECT
+  - SET
+  - SNAT
   - TCPMSS
 
  Tables:
   - filter
   - mangle
+  - nat
+  - raw
 
 endef
 
@@ -125,10 +139,8 @@ iptables extensions for matching/changing IP packet options.
   - dscp
   - ecn
   - length
-  - mark
   - statistic
   - tcpmss
-  - time
   - unclean
   - hl
 
@@ -136,7 +148,6 @@ iptables extensions for matching/changing IP packet options.
   - DSCP
   - CLASSIFY
   - ECN
-  - MARK
   - HL
 
 endef
@@ -156,22 +167,6 @@ iptables extensions for matching ipsec traffic.
 
 endef
 
-define Package/iptables-mod-ipset
-$(call Package/iptables/Module,)
-  TITLE:=IPset iptables extensions
-endef
-
-define Package/iptables-mod-ipset/description
-IPset iptables extensions.
-
- Matches:
-  - set
-
- Targets:
-  - SET
-
-endef
-
 define Package/iptables-mod-nat-extra
 $(call Package/iptables/Module, +kmod-ipt-nat-extra)
   TITLE:=Extra NAT extensions
@@ -183,7 +178,6 @@ iptables extensions for extra NAT targets.
  Targets:
   - MIRROR
   - NETMAP
-  - REDIRECT
 endef
 
 define Package/iptables-mod-ulog
@@ -301,7 +295,7 @@ endef
 define Package/ip6tables
 $(call Package/iptables/Default)
   DEPENDS:=@IPV6 +kmod-ip6tables +iptables
-  CATEGORY:=IPv6
+  CATEGORY:=Network
   TITLE:=IPv6 firewall administration tool
   MENU:=1
 endef
@@ -342,7 +336,11 @@ TARGET_CPPFLAGS := \
 
 TARGET_CFLAGS += \
 	-I$(PKG_BUILD_DIR)/include \
-	-I$(LINUX_DIR)/user_headers/include
+	-I$(LINUX_DIR)/user_headers/include \
+	-ffunction-sections -fdata-sections
+
+TARGET_LDFLAGS += \
+	-Wl,--gc-sections
 
 CONFIGURE_ARGS += \
 	--enable-shared \
@@ -436,7 +434,6 @@ $(eval $(call BuildPlugin,iptables-mod-extra,$(IPT_EXTRA-m)))
 $(eval $(call BuildPlugin,iptables-mod-filter,$(IPT_FILTER-m),$(L7_INSTALL)))
 $(eval $(call BuildPlugin,iptables-mod-ipopt,$(IPT_IPOPT-m)))
 $(eval $(call BuildPlugin,iptables-mod-ipsec,$(IPT_IPSEC-m)))
-$(eval $(call BuildPlugin,iptables-mod-ipset,ipt_set ipt_SET))
 $(eval $(call BuildPlugin,iptables-mod-nat-extra,$(IPT_NAT_EXTRA-m)))
 $(eval $(call BuildPlugin,iptables-mod-iprange,$(IPT_IPRANGE-m)))
 $(eval $(call BuildPlugin,iptables-mod-ulog,$(IPT_ULOG-m)))
