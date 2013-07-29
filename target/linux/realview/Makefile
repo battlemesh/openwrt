@@ -10,10 +10,10 @@ ARCH:=arm
 BOARD:=realview
 BOARDNAME:=ARM Ltd. Realview board (qemu)
 FEATURES:=fpu ramdisk
-CFLAGS:=-Os -pipe -march=armv6k -mtune=mpcore -mfloat-abi=softfp -mfpu=vfp -fno-caller-saves
+CFLAGS:=-Os -pipe -march=armv6k -mtune=mpcore -mfloat-abi=softfp -mfpu=vfp
 MAINTAINER:=Florian Fainelli <florian@openwrt.org>
 
-LINUX_VERSION:=3.8.13
+LINUX_VERSION:=3.10.3
 
 DEVICE_TYPE:=developerboard
 

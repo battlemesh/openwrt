@@ -24,6 +24,7 @@ platform_check_image() {
 	all5002 | \
 	all5003 | \
 	asl26555 | \
+	awm002-evb | \
 	bc2 | \
 	broadway | \
 	carambola | \
@@ -37,11 +38,15 @@ platform_check_image() {
 	dir-620-d1 | \
 	dap-1350 | \
 	esr-9753 | \
+	f7c027 | \
 	fonera20n | \
 	rt-n13u | \
 	freestation5 | \
 	hw550-3g | \
+	hg255d | \
 	mofi3500-3gn | \
+	mpr-a1 | \
+	mpr-a2 | \
 	mzk-w300nh2 | \
 	nbg-419n | \
 	nw718 | \
@@ -61,6 +66,7 @@ platform_check_image() {
 	v22rw-2x2 | \
 	wl341v3 | \
 	wl-330n | \
+	wl-330n3g | \
 	wl-351 | \
 	wnce2001 | \
 	wli-tx4-ag300n | \

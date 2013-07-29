@@ -46,6 +46,9 @@ ramips_board_detect() {
 	*"Argus ATP-52B")
 		name="argus-atp52b"
 		;;
+	*"AsiaRF AWM002-EVB")
+		name="awm002-evb"
+		;;
 	*"BR6524N")
 		name="br6524n"
 		;;
@@ -91,6 +94,9 @@ ramips_board_detect() {
 	*"ESR-9753")
 		name="esr-9753"
 		;;
+	*"F7C027")
+		name="f7c027"
+		;;
 	*"F5D8235 v1")
 		name="f5d8235-v1"
 		;;
@@ -112,6 +118,12 @@ ramips_board_detect() {
 	*"MoFi Network MOFI3500-3GN")
 		name="mofi3500-3gn"
 		;;
+	*"HAME MPR-A1")
+ 		name="mpr-a1"
+ 		;;
+	*"HAME MPR-A2")
+ 		name="mpr-a2"
+ 		;;
 	*"NBG-419N")
 		name="nbg-419n"
 		;;
@@ -210,6 +222,9 @@ ramips_board_detect() {
 		;;
 	*"XDX RN502J")
 		name="xdxrn502j"
+		;;
+	*"HG255D")
+		name="hg255d"
 		;;
 	*)
 		name="generic"

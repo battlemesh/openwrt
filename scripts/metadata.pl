@@ -165,7 +165,8 @@ sub target_config_features(@) {
 		/pcmcia/ and $ret .= "\tselect PCMCIA_SUPPORT\n";
 		/rtc/ and $ret .= "\tselect RTC_SUPPORT\n";
 		/squashfs/ and $ret .= "\tselect USES_SQUASHFS\n";
-		/jffs2/ and $ret .= "\tselect USES_JFFS2\n";
+		/jffs2$/ and $ret .= "\tselect USES_JFFS2\n";
+		/jffs2_nand/ and $ret .= "\tselect USES_JFFS2_NAND\n";
 		/ext4/ and $ret .= "\tselect USES_EXT4\n";
 		/targz/ and $ret .= "\tselect USES_TARGZ\n";
 		/cpiogz/ and $ret .= "\tselect USES_CPIOGZ\n";
@@ -176,6 +177,7 @@ sub target_config_features(@) {
 		/powerpc64/ and $ret .= "\tselect powerpc64\n";
 		/nommu/ and $ret .= "\tselect NOMMU\n";
 		/mips16/ and $ret .= "\tselect HAS_MIPS16\n";
+		/rfkill/ and $ret .= "\tselect RFKILL_SUPPORT\n";
 	}
 	return $ret;
 }
@@ -547,8 +549,13 @@ sub print_package_config_category($) {
 			$pkg->{hidden} and $title = "";
 			print "\t\t".($pkg->{tristate} ? 'tristate' : 'bool')." $title\n";
 			print "\t\tdefault y if DEFAULT_".$pkg->{name}."\n";
-			foreach my $default (split /\s*,\s*/, $pkg->{default}) {
-				print "\t\tdefault $default\n";
+			unless ($pkg->{hidden}) {
+				$pkg->{default} ||= "m if ALL";
+			}
+			if ($pkg->{default}) {
+				foreach my $default (split /\s*,\s*/, $pkg->{default}) {
+					print "\t\tdefault $default\n";
+				}
 			}
 			print mconf_depends($pkg->{name}, $pkg->{depends}, 0);
 			print mconf_depends($pkg->{name}, $pkg->{mdepends}, 0);
@@ -615,7 +622,7 @@ EOF
 	}
 	print_package_features();
 	print_package_config_category 'Base system';
-	foreach my $cat (keys %category) {
+	foreach my $cat (sort {uc($a) cmp uc($b)} keys %category) {
 		print_package_config_category $cat;
 	}
 }
@@ -756,7 +763,7 @@ sub gen_package_mk() {
 					$idx = $subdir{$dep}.$dep;
 				}
 				$idx .= $suffix;
-				undef $idx if $idx =~ /^(kernel)|(base-files)$/;
+				undef $idx if $idx eq 'base-files';
 				if ($idx) {
 					my $depline;
 					next if $pkg->{src} eq $pkg_dep->{src}.$suffix;

@@ -55,6 +55,12 @@ get_status_led() {
 	mofi3500-3gn)
 		status_led="mofi3500-3gn:green:status"
 		;;
+	mpr-a1)
+		status_led="mpr-a1:red:power"
+		;;
+	mpr-a2)
+		status_led="mpr-a2:red:power"
+		;;
 	nbg-419n)
 		status_led="nbg-419n:green:power"
 		;;
@@ -129,6 +135,9 @@ get_status_led() {
 	xdxrn502j)
 		status_led="xdxrn502j:green:power"
 		;;
+	f7c027)
+		status_led="belkin:orange:status"
+        ;;
 	esac
 }
 
@@ -137,7 +146,6 @@ set_state() {
 
 	case "$1" in
 	preinit)
-		insmod leds-gpio 2> /dev/null
 		status_led_blink_preinit
 		;;
 	failsafe)
