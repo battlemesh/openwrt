@@ -6,7 +6,7 @@
 #
 
 # boards missing since devicetree update
-#EASY50712 ARV3527P GIGASX76X ARV4519PW BTHOMEHUBV2B BTHOMEHUBV2BOPENRG
+#EASY50712 ARV3527P GIGASX76X BTHOMEHUBV2B BTHOMEHUBV2BOPENRG
 #WBMR P2601HNFX H201L
 
 include $(TOPDIR)/rules.mk
@@ -18,23 +18,23 @@ LOADER_MAKE := $(NO_TRACE_MAKE) -C lzma-loader KDIR=$(KDIR)
 
 define Image/BuildLoader/Template
 	-rm -rf $(KDIR)/lzma-loader
-	$(LOADER_MAKE) LOADER=loader-$(1).$(2)\
+	$(LOADER_MAKE) LOADER=loader$(2)-$(1).bin\
 		LZMA_TEXT_START=0x80a00000 \
 		LOADADDR=0x80002000 \
-		LOADER_DATA="$(KDIR)/vmlinux-$(1).lzma" BOARD="$(1)" \
-		compile loader.$(2)
+		LOADER_DATA="$(KDIR)/vmlinux$(2)-$(1).lzma" BOARD="$(1)" \
+		compile loader.bin
 endef
 
 
 define CompressLzma
-  $(STAGING_DIR_HOST)/bin/lzma e $(1) $(2)
+	$(STAGING_DIR_HOST)/bin/lzma e $(1) $(2)
 endef
 
 define PatchKernelLzma
-	cp $(KDIR)/vmlinux $(KDIR)/vmlinux-$(1)
+	cp $(KDIR)/vmlinux$(2) $(KDIR)/vmlinux$(2)-$(1)
 	$(LINUX_DIR)/scripts/dtc/dtc -O dtb -o $(KDIR)/$(1).dtb ../dts/$(1).dts
-	$(STAGING_DIR_HOST)/bin/patch-dtb $(KDIR)/vmlinux-$(1) $(KDIR)/$(1).dtb
-	$(call CompressLzma,$(KDIR)/vmlinux-$(1),$(KDIR)/vmlinux-$(1).lzma)
+	$(STAGING_DIR_HOST)/bin/patch-dtb $(KDIR)/vmlinux$(2)-$(1) $(KDIR)/$(1).dtb
+	$(call CompressLzma,$(KDIR)/vmlinux$(2)-$(1),$(KDIR)/vmlinux$(2)-$(1).lzma)
 endef
 
 define MkBrnImage
@@ -46,7 +46,7 @@ endef
 define MkImageLzma
 	mkimage -A mips -O linux -T kernel -a 0x80002000 -C lzma \
 		-e 0x80002000 -n 'MIPS OpenWrt Linux-$(LINUX_VERSION)' \
-		-d $(KDIR)/vmlinux-$(1).lzma $(KDIR)/uImage-$(1)
+		-d $(KDIR)/vmlinux$(2)-$(1).lzma $(KDIR)/uImage-$(1)$(2)
 endef
 
 define MkImageEVA
@@ -56,19 +56,19 @@ define MkImageEVA
 endef
 
 define CompressGzip
-  gzip -c $(1) > $(2)
+	gzip -c $(1) > $(2)
 endef
 
 define PatchKernelGzip
-	cp $(KDIR)/vmlinux $(KDIR)/vmlinux-$(1)
-	$(STAGING_DIR_HOST)/bin/patch-cmdline $(KDIR)/vmlinux-$(1) '$(strip $(2))'
-	$(call CompressGzip,$(KDIR)/vmlinux-$(1),$(KDIR)/vmlinux-$(1).gzip)
+	cp $(KDIR)/vmlinux$(3) $(KDIR)/vmlinux$(3)-$(1)
+	$(STAGING_DIR_HOST)/bin/patch-cmdline $(KDIR)/vmlinux$(3)-$(1) '$(strip $(2))'
+	$(call CompressGzip,$(KDIR)/vmlinux$(3)-$(1),$(KDIR)/vmlinux$(3)-$(1).gzip)
 endef
 
 define MkImageGzip
 	mkimage -A mips -O linux -T kernel -a 0x80002000 -C gzip \
 		-e 0x80002000 -n 'MIPS OpenWrt Linux-$(LINUX_VERSION)' \
-		-d $(KDIR)/vmlinux-$(1).gzip $(KDIR)/uImage-$(1)
+		-d $(KDIR)/vmlinux$(2)-$(1).gzip $(KDIR)/uImage-$(1)$(2)
 endef
 
 define Image/Build/squashfs
@@ -108,20 +108,31 @@ define Image/Build/jffs2-256k
 endef
 
 define Image/BuildKernel/Template
-	$(call PatchKernelLzma,$(1),$(if $(2),$(2) machtype=$(1),))
+	$(call PatchKernelLzma,$(1))
 	$(call MkImageLzma,$(1))
 	$(CP) $(KDIR)/uImage-$(1) $(BIN_DIR)/$(IMG_PREFIX)-$(1)-uImage
+ifneq ($(CONFIG_TARGET_ROOTFS_INITRAMFS),)
+	$(call PatchKernelLzma,$(1),-initramfs)
+	$(call MkImageLzma,$(1),-initramfs)
+	$(CP) $(KDIR)/uImage-$(1)-initramfs $(BIN_DIR)/$(IMG_PREFIX)-$(1)-uImage-initramfs
+endif
 endef
 
 define Image/BuildKernelLoader/Template
 	$(call PatchKernelLzma,$(1))
-	$(call Image/BuildLoader/Template,$(1),bin)
+	$(call Image/BuildLoader/Template,$(1))
 	$(CP) $(KDIR)/loader-$(1).bin $(BIN_DIR)/$(IMG_PREFIX)-$(1)-vmlinux-loader
 	$(CP) $(KDIR)/vmlinux-$(1) $(BIN_DIR)/$(IMG_PREFIX)-$(1)-vmlinux
+ifneq ($(CONFIG_TARGET_ROOTFS_INITRAMFS),)
+	$(call PatchKernelLzma,$(1),-initramfs)
+	$(call Image/BuildLoader/Template,$(1),-initramfs)
+	$(CP) $(KDIR)/loader-initramfs-$(1).bin $(BIN_DIR)/$(IMG_PREFIX)-$(1)-vmlinux-initramfs-loader
+	$(CP) $(KDIR)/vmlinux-initramfs-$(1) $(BIN_DIR)/$(IMG_PREFIX)-$(1)-vmlinux-initramfs
+endif
 endef
 
 define Image/BuildKernelEVA/Template
-	$(call PatchKernelLzma,$(1),$(if $(2),$(2) machtype=$(1),))
+	$(call PatchKernelLzma,$(1))
 	$(call MkImageEVA,$(1))
 	$(CP) $(KDIR)/$(1).eva $(BIN_DIR)/$(IMG_PREFIX)-$(1).eva
 endef
@@ -130,6 +141,11 @@ define Image/BuildKernelGzip/Template
 	$(call PatchKernelGzip,$(1),$(if $(2),$(2) machtype=$(1),))
 	$(call MkImageGzip,$(1))
 	$(CP) $(KDIR)/uImage-$(1) $(BIN_DIR)/$(IMG_PREFIX)-$(1)-uImage
+ifneq ($(CONFIG_TARGET_ROOTFS_INITRAMFS),)
+	$(call PatchKernelGzip,$(1),$(if $(2),$(2) machtype=$(1),),-initramfs)
+	$(call MkImageGzip,$(1),-initramfs)
+	$(CP) $(KDIR)/uImage-$(1)-initramfs $(BIN_DIR)/$(IMG_PREFIX)-$(1)-uImage-initramfs
+endif
 endef
 
 
@@ -178,6 +194,9 @@ Image/Build/Profile/ARV4518PWR01=$(call Image/Build/$(1),$(1),ARV4518PWR01)
 Image/BuildKernel/Profile/ARV4518PWR01A=$(call Image/BuildKernel/Template,ARV4518PWR01A)
 Image/Build/Profile/ARV4518PWR01A=$(call Image/Build/$(1),$(1),ARV4518PWR01A)
 
+Image/BuildKernel/Profile/ARV4519PW=$(call Image/BuildKernel/Template,ARV4519PW)
+Image/Build/Profile/ARV4519PW=$(call Image/Build/$(1),$(1),ARV4519PW)
+
 Image/BuildKernel/Profile/ARV4520PW=$(call Image/BuildKernel/Template,ARV4520PW)
 Image/Build/Profile/ARV4520PW=$(call Image/Build/$(1),$(1),ARV4520PW)
 
@@ -223,6 +242,9 @@ Image/Build/Profile/FRITZ3370=$(call Image/BuildNANDEVA/$(1),$(1),FRITZ3370)
 
 Image/BuildKernel/Profile/VG3503J=$(call Image/BuildKernelLoader/Template,VG3503J)
 Image/Build/Profile/VG3503J=$(call Image/BuildLoader/$(1),$(1),VG3503J)
+
+Image/BuildKernel/Profile/TDW8970=$(call Image/BuildKernelLoader/Template,TDW8970,$(1))
+Image/Build/Profile/TDW8970=$(call Image/BuildLoader/$(1),$(1),TDW8970)
 
 endif
 
