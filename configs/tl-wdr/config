@@ -110,3 +110,6 @@ CONFIG_PACKAGE_kmod-lib-crc-ccitt=y
 CONFIG_PACKAGE_mjpg-streamer=m
 CONFIG_PACKAGE_kmod-video-pwc=m
 CONFIG_PACKAGE_kmod-video-uvc=m
+CONFIG_PACKAGE_kmod-input-core=m
+CONFIG_PACKAGE_kmod-video-core=m
+CONFIG_PACKAGE_kmod-video-videobuf2=m
